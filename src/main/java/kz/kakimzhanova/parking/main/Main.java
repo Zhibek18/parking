@@ -33,6 +33,7 @@ public class Main {
 
         }catch (InterruptedException e){
             logger.log(Level.WARN, e);
+            Thread.currentThread().interrupt();
         }
     }
 }

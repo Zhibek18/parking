@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ParkingAction {
+public class CarAction {
     private static Logger logger = LogManager.getLogger();
     private static Lock lock = new ReentrantLock(true);
 
@@ -17,7 +17,7 @@ public class ParkingAction {
         Parking parking = Parking.getInstance();
         lock.lock();
         try{
-            for (int i = 0; i < parking.getN(); i++) {
+            for (int i = 0; i < Parking.getParkingSpaceCount(); i++) {
                 if (parking.isFree(i)) {
                     parking.takeParkingSpace(i, carId);
                     logger.log(Level.INFO, "Car " + carId + " has taken space number " + i);
