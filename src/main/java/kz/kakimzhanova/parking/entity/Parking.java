@@ -49,11 +49,11 @@ public class Parking {
         else throw new WrongParkingIndexException("Wrong index i = " + i);
     }
 
-    public void takeParkingSpace(int i, int carId){ // change name
+    public void takeParkingSpace(int i, int carId){
         parkingSpaces.get(i).setTaken(carId);
     }
 
-    public void freeParkingSpace(int i){ //change name
+    public void freeParkingSpace(int i){
         parkingSpaces.get(i).setFree();
     }
 }
