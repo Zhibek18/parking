@@ -16,7 +16,6 @@ public class Car extends Thread {
     private static Logger logger = LogManager.getLogger();
     private static Semaphore semaphore = new Semaphore(Parking.getParkingSpaceCount());
     private int carId;
-
     public Car(){
         carId = IdGenerator.generateId();
     }
@@ -25,21 +24,23 @@ public class Car extends Thread {
     public void run() {
         try {
             if (semaphore.tryAcquire(CAR_WAITING_TIME, TimeUnit.SECONDS)){
-                CarAction parkingAction = new CarAction();
-                int i = parkingAction.park(carId);
+                CarAction carAction = new CarAction();
+                int parkingSpaceId = carAction.park(carId);
                 Random random = new SecureRandom();
-                TimeUnit.SECONDS.sleep(random.nextInt(10));
+                int parkingTime = random.nextInt(10);
+                logger.log(Level.INFO, "Car "+ carId + " will remain for " + parkingTime + " s" );
+                TimeUnit.SECONDS.sleep(parkingTime);
 
-                if (i != -1) {
-                    parkingAction.leave(i, carId);
+                if (parkingSpaceId != -1) {
+                    carAction.leave(parkingSpaceId, carId);
                 }
                 else {
-                    logger.log(Level.WARN, "Car "+ carId + " ");
+                    logger.log(Level.WARN, "Car "+ carId + " no parking space found");
                 }
                 semaphore.release();
             }
             else{
-                logger.log(Level.INFO, "Car "+ carId + " could not find parking space");
+                logger.log(Level.INFO, "Car "+ carId + " waiting timer expired. Leaves parking");
             }
         } catch (InterruptedException e) {
             logger.log(Level.WARN, e);

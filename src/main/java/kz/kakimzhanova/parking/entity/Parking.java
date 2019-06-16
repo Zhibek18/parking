@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Parking {
-    private static final int PARKING_SPACE_COUNT = 4;
+    private static final int PARKING_SPACE_COUNT = 2;
     private static Parking instance;
     private static Lock lock = new ReentrantLock(true);
     private static AtomicBoolean created = new AtomicBoolean(false);
